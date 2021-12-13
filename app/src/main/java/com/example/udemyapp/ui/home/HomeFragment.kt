@@ -4,22 +4,57 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.udemyapp.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.udemyapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    val homeViewModel: HomeViewModel by viewModels()
+    lateinit var homeViewBindings: FragmentHomeBinding
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        homeViewBindings = FragmentHomeBinding.inflate(inflater, container, false)
+        return homeViewBindings.root
     }
 
-    companion object
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        homeViewModel.internalState.observe(viewLifecycleOwner, {
+            renderView(it)
+        })
+        if (homeViewModel.internalState.value == null) {
+            homeViewModel.getCoursesList()
+        }
+    }
+
+
+    private fun renderView(viewState: CoursesViewState) {
+        when (viewState) {
+            is CoursesViewState.BusinessList.Success -> {
+                val adapter = CourseAdapter(viewState.businessList)
+                homeViewBindings.rvFeatured.layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+
+                homeViewBindings.rvFeatured.adapter = adapter
+            }
+            is CoursesViewState.BusinessList.Failure -> {
+                Toast.makeText(requireContext(), "error occurred", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+    }
+
+
 }

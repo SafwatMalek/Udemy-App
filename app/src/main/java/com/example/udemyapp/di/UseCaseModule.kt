@@ -1,7 +1,7 @@
 package com.example.udemyapp.di
 
-import com.example.udemyapp.domain.usecase.courseList.CourseListUseCase
-import com.example.udemyapp.domain.usecase.courseList.CourseListUseCaseImp
+import com.example.udemyapp.domain.usecase.courseList.BusinessCourseListUseCase
+import com.example.udemyapp.domain.usecase.courseList.BusinessCourseListUseCaseImp
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun provideCourseListUseCase(courseListUseCase: CourseListUseCaseImp): CourseListUseCase
+    abstract fun provideCourseListUseCase(courseListUseCase: BusinessCourseListUseCaseImp): BusinessCourseListUseCase
 
 
 }

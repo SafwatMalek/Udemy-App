@@ -26,5 +26,18 @@ data class Results(
     @SerializedName("order_in_results") val order_in_results: String,
     @SerializedName("curriculum_items") val curriculum_items: List<String>,
     @SerializedName("headline") val headline: String,
-    @SerializedName("instructor_name") val instructor_name: String
-)
+    @SerializedName("instructor_name") val instructor_name: String?
+) {
+
+    fun getInstructorsNames(): String {
+        return if (!instructor_name.isNullOrEmpty()) {
+            instructor_name
+        } else {
+            val names = ""
+            visible_instructors.forEach {
+                names.plus("${it.display_name} ")
+            }
+            names
+        }
+    }
+}
