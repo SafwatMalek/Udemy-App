@@ -4,10 +4,11 @@ import com.example.udemyapp.data.course.Results
 
 sealed class CoursesViewState {
 
-     class CoursesList(
+    class CoursesList(
         val businessList: List<Results>,
         val designList: List<Results>,
         val developmentList: List<Results>
     ) : CoursesViewState()
 
+    class Loading(val isLong: Boolean) : CoursesViewState()
 }

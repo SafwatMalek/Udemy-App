@@ -24,6 +24,7 @@ class HomeViewModel @Inject constructor(
 
     fun getCoursesList() {
         try {
+            viewState.value = CoursesViewState.Loading(true)
             viewModelScope.launch(Dispatchers.IO) {
                 supervisorScope {
                     val business = async(Dispatchers.IO) {
@@ -37,6 +38,7 @@ class HomeViewModel @Inject constructor(
                     }.await()
 
                     withContext(Dispatchers.Main) {
+                        viewState.value = CoursesViewState.Loading(false)
                         viewState.value = CoursesViewState.CoursesList(
                             business,
                             design,
