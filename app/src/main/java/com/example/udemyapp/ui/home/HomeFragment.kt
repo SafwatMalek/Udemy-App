@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,10 +26,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.internalState.observe(viewLifecycleOwner, {
-            renderView(it)
-        })
         if (homeViewModel.internalState.value == null) {
+            homeViewModel.internalState.observe(viewLifecycleOwner, {
+                renderView(it)
+            })
             homeViewModel.getCoursesList()
         }
     }
@@ -38,31 +37,37 @@ class HomeFragment : Fragment() {
 
     private fun renderView(viewState: CoursesViewState) {
         when (viewState) {
-            is CoursesViewState.BusinessList.Success -> {
-                val adapter = CourseAdapter(viewState.businessList)
-                homeViewBindings.rvBusiness.layoutManager = LinearLayoutManager(
+            is CoursesViewState.CoursesList -> {
+                val businessLayoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+                val designLayoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+                val developmentLayoutManager = LinearLayoutManager(
                     requireContext(),
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
 
-                homeViewBindings.rvBusiness.adapter = adapter
-            }
-            is CoursesViewState.BusinessList.Failure -> {
-                Toast.makeText(requireContext(), "error occurred", Toast.LENGTH_SHORT).show()
-            }
-            is CoursesViewState.DesignList.Success -> {
-                val adapter = CourseAdapter(viewState.designList)
-                homeViewBindings.rvDesign.layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-
-                homeViewBindings.rvDesign.adapter = adapter
-            }
+                homeViewBindings.rvBusiness.layoutManager = businessLayoutManager
+                homeViewBindings.rvDesign.layoutManager = designLayoutManager
+                homeViewBindings.rvDevelopment.layoutManager = developmentLayoutManager
 
 
+                val businessAdapter = CourseAdapter(viewState.businessList)
+                homeViewBindings.rvBusiness.adapter = businessAdapter
+
+                val designAdapter = CourseAdapter(viewState.designList)
+                homeViewBindings.rvDesign.adapter = designAdapter
+
+                val developmentAdapter = CourseAdapter(viewState.developmentList)
+                homeViewBindings.rvDevelopment.adapter = developmentAdapter
+            }
         }
 
     }

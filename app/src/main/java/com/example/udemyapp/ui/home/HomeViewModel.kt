@@ -6,17 +6,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.domain.usecase.courseList.business.BusinessCourseListUseCase
 import com.example.udemyapp.domain.usecase.courseList.design.DesignCourseListUseCase
+import com.example.udemyapp.domain.usecase.courseList.development.DevelopmentCourseListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val businessCourseListUseCase: BusinessCourseListUseCase,
-    private val designCourseListUseCase: DesignCourseListUseCase
-) :
-    ViewModel() {
+    private val designCourseListUseCase: DesignCourseListUseCase,
+    private val developmentCourseListUseCase: DevelopmentCourseListUseCase
+) : ViewModel() {
 
     private val viewState = MutableLiveData<CoursesViewState>()
     val internalState = viewState
@@ -24,17 +24,28 @@ class HomeViewModel @Inject constructor(
 
     fun getCoursesList() {
         try {
-            viewModelScope.launch {
-                val business = async {
-                    getBusinessList()
-                }
-                val design = async {
-                    getTopDesign()
-                }
+            viewModelScope.launch(Dispatchers.IO) {
+                supervisorScope {
+                    val business = async(Dispatchers.IO) {
+                        getBusinessList()
+                    }.await()
+                    val design = async(Dispatchers.IO) {
+                        getTopDesign()
+                    }.await()
+                    val development = async(Dispatchers.IO) {
+                        getTopDevelopment()
+                    }.await()
 
-                viewState.value = CoursesViewState.BusinessList.Success(business.await())
-                viewState.value = CoursesViewState.DesignList.Success(design.await())
+                    withContext(Dispatchers.Main) {
+                        viewState.value = CoursesViewState.CoursesList(
+                            business,
+                            design,
+                            development
+                        )
+                    }
+                }
             }
+
         } catch (e: Exception) {
             print("exception occurred : $e")
         }
@@ -48,7 +59,10 @@ class HomeViewModel @Inject constructor(
         return designCourseListUseCase.getDesignCourseList(pageSize = 6)
     }
 
-    suspend fun getTopDevelopment() {}
+    private suspend fun getTopDevelopment(): List<Results> {
+        return developmentCourseListUseCase.getDevelopmentCourses(pageSize = 6)
+    }
+
     suspend fun getTopITSoftware() {}
     suspend fun getTopPersonalDevelopment() {}
 }
