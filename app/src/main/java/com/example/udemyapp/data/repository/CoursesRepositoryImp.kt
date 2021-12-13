@@ -8,8 +8,8 @@ import javax.inject.Inject
 class CoursesRepositoryImp @Inject constructor(val udemyAPI: UdemyAPI) : CoursesRepository {
 
 
-    override suspend fun getBusinessCoursesList(pageSize: Int): CoursesResponse {
-        return udemyAPI.getCourses(category = "Business", pageSize = pageSize)
+    override suspend fun getCoursesList(pageSize: Int, category: String?): CoursesResponse {
+        return udemyAPI.getCourses(category = category, pageSize = pageSize)
     }
 
 

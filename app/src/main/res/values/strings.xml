@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Udemy App</string>
     <string name="home_business_title">Business</string>
+    <string name="home_design_title">Top Courses in Design</string>
 </resources>

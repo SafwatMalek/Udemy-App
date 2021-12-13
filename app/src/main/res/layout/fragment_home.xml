@@ -9,6 +9,7 @@
     <!--business section-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
+        android:id="@+id/businessSection"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <!--    business list-->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFeatured"
+            android:id="@+id/rvBusiness"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -38,6 +39,44 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvBusinessHeader"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_course_list" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--designer section-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/designSection"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/businessSection"
+        >
+        <!--    business title-->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDesignHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/home_design_title"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--    business list-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDesign"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDesignHeader"
             tools:itemCount="1"
             tools:listitem="@layout/item_course_list" />
 

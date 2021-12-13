@@ -40,17 +40,28 @@ class HomeFragment : Fragment() {
         when (viewState) {
             is CoursesViewState.BusinessList.Success -> {
                 val adapter = CourseAdapter(viewState.businessList)
-                homeViewBindings.rvFeatured.layoutManager = LinearLayoutManager(
+                homeViewBindings.rvBusiness.layoutManager = LinearLayoutManager(
                     requireContext(),
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
 
-                homeViewBindings.rvFeatured.adapter = adapter
+                homeViewBindings.rvBusiness.adapter = adapter
             }
             is CoursesViewState.BusinessList.Failure -> {
                 Toast.makeText(requireContext(), "error occurred", Toast.LENGTH_SHORT).show()
             }
+            is CoursesViewState.DesignList.Success -> {
+                val adapter = CourseAdapter(viewState.designList)
+                homeViewBindings.rvDesign.layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+
+                homeViewBindings.rvDesign.adapter = adapter
+            }
+
 
         }
 

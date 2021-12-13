@@ -7,4 +7,8 @@ sealed class CoursesViewState {
         class Success(val businessList: List<Results>) : CoursesViewState()
         object Failure : CoursesViewState()
     }
+    sealed class DesignList {
+        class Success(val designList: List<Results>) : CoursesViewState()
+        object Failure : CoursesViewState()
+    }
 }

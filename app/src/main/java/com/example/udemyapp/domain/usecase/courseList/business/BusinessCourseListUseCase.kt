@@ -1,4 +1,4 @@
-package com.example.udemyapp.domain.usecase.courseList
+package com.example.udemyapp.domain.usecase.courseList.business
 
 import com.example.udemyapp.data.course.Results
 
