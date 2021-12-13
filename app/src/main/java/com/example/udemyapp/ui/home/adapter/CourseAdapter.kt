@@ -1,4 +1,4 @@
-package com.example.udemyapp.ui.home
+package com.example.udemyapp.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

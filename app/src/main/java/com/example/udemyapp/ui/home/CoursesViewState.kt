@@ -7,7 +7,8 @@ sealed class CoursesViewState {
     class CoursesList(
         val businessList: List<Results>,
         val designList: List<Results>,
-        val developmentList: List<Results>
+        val developmentList: List<Results>,
+        val categories: List<String>
     ) : CoursesViewState()
 
     class Loading(val isLong: Boolean) : CoursesViewState()

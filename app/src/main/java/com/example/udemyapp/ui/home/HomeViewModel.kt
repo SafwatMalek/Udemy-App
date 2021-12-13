@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.domain.usecase.courseList.business.BusinessCourseListUseCase
+import com.example.udemyapp.domain.usecase.courseList.category.CategoryUseCase
 import com.example.udemyapp.domain.usecase.courseList.design.DesignCourseListUseCase
 import com.example.udemyapp.domain.usecase.courseList.development.DevelopmentCourseListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val businessCourseListUseCase: BusinessCourseListUseCase,
     private val designCourseListUseCase: DesignCourseListUseCase,
-    private val developmentCourseListUseCase: DevelopmentCourseListUseCase
+    private val developmentCourseListUseCase: DevelopmentCourseListUseCase,
+    private val categoryUseCase: CategoryUseCase
 ) : ViewModel() {
 
     private val viewState = MutableLiveData<CoursesViewState>()
@@ -36,13 +38,17 @@ class HomeViewModel @Inject constructor(
                     val development = async(Dispatchers.IO) {
                         getTopDevelopment()
                     }.await()
+                    val categories = async(Dispatchers.IO) {
+                        getCategories()
+                    }.await()
 
                     withContext(Dispatchers.Main) {
                         viewState.value = CoursesViewState.Loading(false)
                         viewState.value = CoursesViewState.CoursesList(
                             business,
                             design,
-                            development
+                            development,
+                            categories
                         )
                     }
                 }
@@ -65,6 +71,7 @@ class HomeViewModel @Inject constructor(
         return developmentCourseListUseCase.getDevelopmentCourses(pageSize = 6)
     }
 
-    suspend fun getTopITSoftware() {}
-    suspend fun getTopPersonalDevelopment() {}
+    private suspend fun getCategories(): List<String> {
+        return categoryUseCase.getCategory()
+    }
 }

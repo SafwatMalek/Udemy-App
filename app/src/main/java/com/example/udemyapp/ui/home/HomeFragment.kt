@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.databinding.FragmentHomeBinding
+import com.example.udemyapp.ui.home.adapter.CategoryAdapter
+import com.example.udemyapp.ui.home.adapter.CourseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +45,7 @@ class HomeFragment : Fragment() {
                 initBusinessList(viewState.businessList)
                 initDesignList(viewState.designList)
                 initDevelopmentList(viewState.developmentList)
+                initCategoryList(viewState.categories)
             }
             is CoursesViewState.Loading -> {
                 homeViewBindings.loader.visibility = if (viewState.isLong) {
@@ -104,4 +108,20 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun initCategoryList(categories: List<String>) {
+        if (categories.isNullOrEmpty()) {
+            homeViewBindings.categorySection.visibility = View.GONE
+        } else {
+            homeViewBindings.categorySection.visibility = View.VISIBLE
+            val categoryLayoutManager = GridLayoutManager(
+                context, 2, GridLayoutManager.HORIZONTAL, false
+            )
+
+            homeViewBindings.rvCategory.layoutManager = categoryLayoutManager
+
+
+            val developmentAdapter = CategoryAdapter(categories)
+            homeViewBindings.rvCategory.adapter = developmentAdapter
+        }
+    }
 }
