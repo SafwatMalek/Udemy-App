@@ -26,7 +26,9 @@ data class Results(
     @SerializedName("order_in_results") val order_in_results: String,
     @SerializedName("curriculum_items") val curriculum_items: List<String>,
     @SerializedName("headline") val headline: String,
-    @SerializedName("instructor_name") val instructor_name: String?
+    @SerializedName("instructor_name") val instructor_name: String?,
+    @SerializedName("avg_rating") val avg_rating: String?="0",
+    @SerializedName("num_subscribers") val num_subscribers: String?="0"
 ) {
 
     fun getInstructorsNames(): String {
@@ -35,7 +37,7 @@ data class Results(
         } else {
             val names = ""
             visible_instructors.forEach {
-                names.plus("${it.display_name} ")
+                names.plus("${it.display_name}, ")
             }
             names
         }

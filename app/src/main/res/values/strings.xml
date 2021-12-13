@@ -4,4 +4,5 @@
     <string name="home_design_title">Top Courses in Design</string>
     <string name="home_development_title">Top Courses in Development</string>
     <string name="home_category_title">Categories</string>
+    <string name="home_see_all">See All</string>
 </resources>

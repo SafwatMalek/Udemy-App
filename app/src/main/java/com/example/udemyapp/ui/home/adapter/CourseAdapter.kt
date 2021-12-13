@@ -8,25 +8,51 @@ import com.bumptech.glide.Glide
 import com.example.udemyapp.R
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.databinding.ItemCourseListBinding
+import com.example.udemyapp.databinding.ItemSeeAllBinding
 
-class CourseAdapter constructor(private val courses: List<Results>) :
-    RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
+class CourseAdapter constructor(
+    private val courses: List<Results>,
+    private val showSeeAll: Boolean = true
+) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun getItemCount() = courses.size
+    override fun getItemCount() = (if (showSeeAll) {
+        courses.size + 1
+    } else {
+        courses.size
+    })
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val movieViewHolder = ItemCourseListBinding.inflate(layoutInflater, parent, false)
-        return CourseViewHolder(movieViewHolder)
+    override fun getItemViewType(position: Int): Int {
+        return if (position >= courses.size) SEE_ALL_ITEM
+        else COURSE_ITEM
     }
 
-    override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
-        holder.view.courseContainer.animation = AnimationUtils.loadAnimation(
-            holder.view.root.context,
-            R.anim.rv_animation
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            COURSE_ITEM -> {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val movieViewHolder = ItemCourseListBinding.inflate(layoutInflater, parent, false)
+                CourseViewHolder(movieViewHolder)
+            }
+            else -> {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val seeAllBinding = ItemSeeAllBinding.inflate(layoutInflater, parent, false)
+                SeeAllViewHolder(seeAllBinding)
+            }
+        }
+    }
 
-        holder.bind(courses[position])
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is CourseViewHolder -> {
+                holder.view.courseContainer.animation = AnimationUtils.loadAnimation(
+                    holder.view.root.context,
+                    R.anim.rv_animation
+                )
+                holder.bind(courses[position])
+            }
+            is SeeAllViewHolder -> {}
+        }
     }
 
 
@@ -36,12 +62,23 @@ class CourseAdapter constructor(private val courses: List<Results>) :
         fun bind(item: Results) {
             view.tvCourseTitle.text = item.title
             view.tvInstructorName.text = item.getInstructorsNames()
-
+            view.tvCoursePrice.text = item.price
+            view.tvRatingValue.text = item.avg_rating
+            view.rbCourse.rating = item.avg_rating?.toFloat() ?: 0f
+            view.tvWatchingNum.text = "(${item.num_subscribers ?: 0})"
             view.ivCourse.clipToOutline = true
             Glide.with(view.root.context)
                 .load(item.image_240x135)
                 .into(view.ivCourse)
         }
+    }
+
+    inner class SeeAllViewHolder(private val view: ItemSeeAllBinding) :
+        RecyclerView.ViewHolder(view.root)
+
+    companion object {
+        const val COURSE_ITEM = 1
+        const val SEE_ALL_ITEM = 2
     }
 
 }
