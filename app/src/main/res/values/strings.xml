@@ -5,4 +5,6 @@
     <string name="home_development_title">Top Courses in Development</string>
     <string name="home_category_title">Categories</string>
     <string name="home_see_all">See All</string>
+    <string name="details_preview_this_course">Preview this course</string>
+    <string name="details_created_by">Created by %s</string>
 </resources>

@@ -64,7 +64,7 @@ class CourseAdapter(
         fun bind(item: Results) {
             view.tvCourseTitle.text = item.title
             view.tvInstructorName.text = item.getInstructorsNames()
-            view.tvCoursePrice.text = item.price
+            view.tvCoursePrice.text = item.getPriceWithCurrency()
             view.tvRatingValue.text = item.avg_rating
             view.rbCourse.rating = item.avg_rating?.toFloat() ?: 0f
             view.tvWatchingNum.text = "(${item.num_subscribers ?: 0})"

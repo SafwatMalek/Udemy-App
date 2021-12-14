@@ -13,7 +13,7 @@ data class Results(
     @SerializedName("url") val url: String,
     @SerializedName("is_paid") val is_paid: Boolean,
     @SerializedName("price") val price: String,
-    @SerializedName("price_detail") val price_detail: String,
+    @SerializedName("price_detail") val price_detail: PriceDetails,
     @SerializedName("price_serve_tracking_id") val price_serve_tracking_id: String,
     @SerializedName("visible_instructors") val visible_instructors: List<VisibleInstructors>,
     @SerializedName("image_125_H") val image_125_H: String,
@@ -39,11 +39,24 @@ data class Results(
         return if (!instructor_name.isNullOrEmpty()) {
             instructor_name
         } else {
-            val names = ""
+            var names = ""
+            val separator = if (visible_instructors.size > 1) {
+                ", "
+            } else {
+                " "
+            }
             visible_instructors.forEach {
-                names.plus("${it.display_name}, ")
+                names = names.plus("${it.display_name}$separator")
             }
             names
+        }
+    }
+
+    fun getPriceWithCurrency(): String {
+        return if (is_paid) {
+            "${price_detail.currency} $price"
+        } else {
+            "Free"
         }
     }
 }
