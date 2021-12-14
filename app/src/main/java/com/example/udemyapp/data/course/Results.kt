@@ -1,7 +1,11 @@
 package com.example.udemyapp.data.course
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class Results(
     @SerializedName("_class") val _class: String,
     @SerializedName("id") val id: Int,
@@ -27,9 +31,9 @@ data class Results(
     @SerializedName("curriculum_items") val curriculum_items: List<String>,
     @SerializedName("headline") val headline: String,
     @SerializedName("instructor_name") val instructor_name: String?,
-    @SerializedName("avg_rating") val avg_rating: String?="0",
-    @SerializedName("num_subscribers") val num_subscribers: String?="0"
-) {
+    @SerializedName("avg_rating") val avg_rating: String? = "0",
+    @SerializedName("num_subscribers") val num_subscribers: String? = "0"
+) : Parcelable {
 
     fun getInstructorsNames(): String {
         return if (!instructor_name.isNullOrEmpty()) {

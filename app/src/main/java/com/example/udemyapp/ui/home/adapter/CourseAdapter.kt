@@ -9,9 +9,11 @@ import com.example.udemyapp.R
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.databinding.ItemCourseListBinding
 import com.example.udemyapp.databinding.ItemSeeAllBinding
+import kotlin.reflect.KFunction1
 
-class CourseAdapter constructor(
+class CourseAdapter(
     private val courses: List<Results>,
+    private val callback: KFunction1<Results, Unit>,
     private val showSeeAll: Boolean = true
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -70,11 +72,14 @@ class CourseAdapter constructor(
             Glide.with(view.root.context)
                 .load(item.image_240x135)
                 .into(view.ivCourse)
+
+            view.courseContainer.setOnClickListener {
+                callback.invoke(item)
+            }
         }
     }
 
-    inner class SeeAllViewHolder(private val view: ItemSeeAllBinding) :
-        RecyclerView.ViewHolder(view.root)
+    inner class SeeAllViewHolder(view: ItemSeeAllBinding) : RecyclerView.ViewHolder(view.root)
 
     companion object {
         const val COURSE_ITEM = 1

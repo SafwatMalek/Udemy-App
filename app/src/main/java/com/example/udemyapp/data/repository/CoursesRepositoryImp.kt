@@ -3,6 +3,7 @@ package com.example.udemyapp.data.repository
 import com.example.udemyapp.data.api.UdemyAPI
 import com.example.udemyapp.data.course.CoursesCategoryType
 import com.example.udemyapp.data.course.CoursesResponse
+import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.domain.repository.CoursesRepository
 import javax.inject.Inject
 
@@ -21,5 +22,7 @@ class CoursesRepositoryImp @Inject constructor(private val udemyAPI: UdemyAPI) :
         return categories
     }
 
-
+    override suspend fun getCourseDetails(courseId: String): Results {
+        return  udemyAPI.getCourseDetails(courseId)
+    }
 }

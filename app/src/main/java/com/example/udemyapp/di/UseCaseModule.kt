@@ -1,5 +1,7 @@
 package com.example.udemyapp.di
 
+import com.example.udemyapp.domain.usecase.courseDetails.CourseDetailsUseCase
+import com.example.udemyapp.domain.usecase.courseDetails.CourseDetailsUseCaseImp
 import com.example.udemyapp.domain.usecase.courseList.business.BusinessCourseListUseCase
 import com.example.udemyapp.domain.usecase.courseList.business.BusinessCourseListUseCaseImp
 import com.example.udemyapp.domain.usecase.courseList.category.CategoryUseCase
@@ -33,6 +35,10 @@ abstract class UseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun provideCourseCategoryListUseCase(categoryUseCase: CategoryUseCaseImp): CategoryUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun ProvideCourseDtailsUseCase(courseDetailsUseCase: CourseDetailsUseCaseImp): CourseDetailsUseCase
 
 
 }

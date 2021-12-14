@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.udemyapp.data.course.Results
@@ -68,7 +69,7 @@ class HomeFragment : Fragment() {
                 false
             )
             homeViewBindings.rvBusiness.layoutManager = businessLayoutManager
-            val businessAdapter = CourseAdapter(businessList)
+            val businessAdapter = CourseAdapter(businessList, this::courseDetailsAction)
             homeViewBindings.rvBusiness.adapter = businessAdapter
         }
     }
@@ -84,7 +85,7 @@ class HomeFragment : Fragment() {
                 false
             )
             homeViewBindings.rvDesign.layoutManager = designLayoutManager
-            val designAdapter = CourseAdapter(designList)
+            val designAdapter = CourseAdapter(designList, this::courseDetailsAction)
             homeViewBindings.rvDesign.adapter = designAdapter
         }
     }
@@ -103,7 +104,7 @@ class HomeFragment : Fragment() {
             homeViewBindings.rvDevelopment.layoutManager = developmentLayoutManager
 
 
-            val developmentAdapter = CourseAdapter(developmentList)
+            val developmentAdapter = CourseAdapter(developmentList, this::courseDetailsAction)
             homeViewBindings.rvDevelopment.adapter = developmentAdapter
         }
     }
@@ -123,5 +124,10 @@ class HomeFragment : Fragment() {
             val developmentAdapter = CategoryAdapter(categories)
             homeViewBindings.rvCategory.adapter = developmentAdapter
         }
+    }
+
+    private fun courseDetailsAction(course: Results) {
+        val action = HomeFragmentDirections.homeFragmentToDetailsFragment(course)
+        findNavController().navigate(action)
     }
 }
