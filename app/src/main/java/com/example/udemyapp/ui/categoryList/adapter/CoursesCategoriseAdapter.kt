@@ -12,7 +12,7 @@ import com.example.udemyapp.R
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.databinding.ItemCourseByCategoryListBinding
 
-class CoursesCategoriseAdapter :
+class CoursesCategoriseAdapter(val onClick: (Results) -> Unit) :
     PagingDataAdapter<Results, CoursesCategoriseAdapter.CourseCategoriesViewHolder>(REPO_COMPARATOR) {
 
     companion object {
@@ -61,6 +61,7 @@ class CoursesCategoriseAdapter :
                 .into(view.ivCourse)
 
             view.courseContainer.setOnClickListener {
+                onClick.invoke(item)
             }
         }
     }

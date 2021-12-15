@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.databinding.FragmentCategoryListBinding
 import com.example.udemyapp.ui.categoryList.adapter.CoursesCategoriseAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,7 @@ class CategoryListFragment : Fragment() {
     private val categoryVM: CategoriesViewModel by viewModels()
     private val args: CategoryListFragmentArgs by navArgs()
     private val adapter: CoursesCategoriseAdapter by lazy {
-        CoursesCategoriseAdapter()
+        CoursesCategoriseAdapter(this::courseDetailsAction)
     }
     private lateinit var categoryView: FragmentCategoryListBinding
 
@@ -77,4 +78,8 @@ class CategoryListFragment : Fragment() {
     }
 
 
+    private fun courseDetailsAction(course: Results) {
+        val action = CategoryListFragmentDirections.categoryListFragmentToDetailsFragment(course)
+        findNavController().navigate(action)
+    }
 }
