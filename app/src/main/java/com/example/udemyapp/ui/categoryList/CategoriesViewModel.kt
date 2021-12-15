@@ -3,6 +3,7 @@ package com.example.udemyapp.ui.categoryList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.example.udemyapp.domain.usecase.courseList.coursesByCategory.CoursesByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -39,8 +40,13 @@ class CategoriesViewModel @Inject constructor(
 
 
     fun getCourses(category: String) {
+        viewState.value = CourseCategoriseViewState.Loading(true)
+
         viewModelScope.launch(Dispatchers.IO + handleException) {
-            val courses = coursesByCategoryUseCase.getCoursesByCategory(category)
+            val courses = coursesByCategoryUseCase
+                .getCoursesByCategory(category)
+                .cachedIn(viewModelScope)
+
             withContext(Dispatchers.Main) {
                 viewState.value = CourseCategoriseViewState.Loading(false)
                 courses.collectLatest {

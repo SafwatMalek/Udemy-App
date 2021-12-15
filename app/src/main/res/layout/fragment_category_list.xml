@@ -6,45 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".ui.categoryList.CategoryListFragment">
 
-    <!--category section-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/categorySection"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/item_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
-        <!--    business title-->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCategoryHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/home_category_title"
-            android:textColor="?android:textColorPrimary"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <!--    business list-->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCoursesCategory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvCategoryHeader"
-            tools:itemCount="1"
-            tools:listitem="@layout/item_course_list" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    business list-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCoursesCategory"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:itemCount="20"
+        tools:listitem="@layout/item_course_by_category_list"
+        tools:visibility="visible" />
+
 
     <!--loader-->
     <ProgressBar

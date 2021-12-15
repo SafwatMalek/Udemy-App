@@ -1,5 +1,6 @@
 package com.example.udemyapp.ui.categoryList.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.udemyapp.R
 import com.example.udemyapp.data.course.Results
-import com.example.udemyapp.databinding.ItemCourseListBinding
+import com.example.udemyapp.databinding.ItemCourseByCategoryListBinding
 
 class CoursesCategoriseAdapter :
     PagingDataAdapter<Results, CoursesCategoriseAdapter.CourseCategoriesViewHolder>(REPO_COMPARATOR) {
@@ -26,7 +27,12 @@ class CoursesCategoriseAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseCategoriesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val courseViewHolder = ItemCourseListBinding.inflate(layoutInflater, parent, false)
+        val courseViewHolder = ItemCourseByCategoryListBinding.inflate(
+            layoutInflater,
+            parent,
+            false
+        )
+
         return CourseCategoriesViewHolder(courseViewHolder)
     }
 
@@ -38,9 +44,10 @@ class CoursesCategoriseAdapter :
         getItem(position)?.let { holder.bind(item = it) }
     }
 
-    inner class CourseCategoriesViewHolder(val view: ItemCourseListBinding) :
+    inner class CourseCategoriesViewHolder(val view: ItemCourseByCategoryListBinding) :
         RecyclerView.ViewHolder(view.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: Results) {
             view.tvCourseTitle.text = item.title
             view.tvInstructorName.text = item.getInstructorsNames()
@@ -50,7 +57,7 @@ class CoursesCategoriseAdapter :
             view.tvWatchingNum.text = "(${item.num_subscribers ?: 0})"
             view.ivCourse.clipToOutline = true
             Glide.with(view.root.context)
-                .load(item.image_240x135)
+                .load(item.image_125_H)
                 .into(view.ivCourse)
 
             view.courseContainer.setOnClickListener {

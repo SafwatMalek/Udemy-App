@@ -94,7 +94,7 @@ class HomeFragment : Fragment() {
             homeViewBindings.rvDesign.layoutManager = designLayoutManager
             val designAdapter = CourseAdapter(
                 designList,
-                CoursesCategoryType.Business,
+                CoursesCategoryType.Design,
                 this::courseDetailsAction,
                 this::seeAllAction
             )
@@ -118,7 +118,7 @@ class HomeFragment : Fragment() {
 
             val developmentAdapter = CourseAdapter(
                 developmentList,
-                CoursesCategoryType.Business,
+                CoursesCategoryType.Development,
                 this::courseDetailsAction,
                 this::seeAllAction
             )

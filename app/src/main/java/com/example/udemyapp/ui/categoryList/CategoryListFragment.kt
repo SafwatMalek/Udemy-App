@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.udemyapp.databinding.FragmentCategoryListBinding
 import com.example.udemyapp.ui.categoryList.adapter.CoursesCategoriseAdapter
@@ -47,6 +48,7 @@ class CategoryListFragment : Fragment() {
     }
 
     private fun initView() {
+        categoryView.toolbar.tvActionBarTitle.text = args.categoryName
         categoryView.rvCoursesCategory.adapter = adapter
     }
 
@@ -60,7 +62,7 @@ class CategoryListFragment : Fragment() {
                 }
             }
             is CourseCategoriseViewState.Success -> {
-                categoryView.categorySection.visibility = View.VISIBLE
+                categoryView.rvCoursesCategory.visibility = View.VISIBLE
                 lifecycleScope.launch {
                     adapter.submitData(viewState.courses)
                 }
@@ -69,7 +71,9 @@ class CategoryListFragment : Fragment() {
     }
 
     private fun actions() {
-
+        categoryView.toolbar.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
 

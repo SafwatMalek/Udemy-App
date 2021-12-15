@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/courseContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!--course Image-->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCourse"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_rounded"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <!--course title-->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourseTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:lines="2"
+        android:textAlignment="viewStart"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivCourse"
+        app:layout_constraintTop_toTopOf="@+id/ivCourse"
+        tools:text="Photoshop course Masterclass: A complete Guide to photo editor master" />
+
+    <!--instructor name-->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvInstructorName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:alpha="0.7"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAlignment="viewStart"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvCourseTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvCourseTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvCourseTitle"
+        tools:text="Dr Safwat Malek, Dr Arsany Nagy" />
+
+    <!--rating section-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ratingSection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvCourseTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvCourseTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvInstructorName">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRatingValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="4.7" />
+
+        <!-- course rating-->
+        <RatingBar
+            android:id="@+id/rbCourse"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:numStars="5"
+            android:progressTint="@color/gold_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvRatingValue"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWatchingNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:alpha="0.7"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rbCourse"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="(68,618)" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--course Price-->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCoursePrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tvCourseTitle"
+        app:layout_constraintTop_toBottomOf="@+id/ratingSection"
+        tools:text="EGP 22.99" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.3dp"
+        android:layout_marginTop="8dp"
+        android:alpha="0.3"
+        android:background="?android:textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCoursePrice" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
