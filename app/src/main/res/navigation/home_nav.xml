@@ -13,6 +13,9 @@
         <action
             android:id="@+id/homeFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/homeFragment_to_categoryListFragment"
+            app:destination="@id/categoryListFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -24,5 +27,14 @@
             app:argType="com.example.udemyapp.data.course.Results"
             app:nullable="true"
             android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryListFragment"
+        android:name="com.example.udemyapp.ui.categoryList.CategoryListFragment"
+        android:label="fragment_category_list"
+        tools:layout="@layout/fragment_category_list" >
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
     </fragment>
 </navigation>

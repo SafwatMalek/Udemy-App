@@ -5,11 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.example.udemyapp.databinding.FragmentCategoryListBinding
+import com.example.udemyapp.ui.categoryList.adapter.CoursesCategoriseAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class CategoryListFragment : Fragment() {
-    lateinit var categoryView: FragmentCategoryListBinding
+    private val categoryVM: CategoriesViewModel by viewModels()
+    private val args: CategoryListFragmentArgs by navArgs()
+    private val adapter: CoursesCategoriseAdapter by lazy {
+        CoursesCategoriseAdapter()
+    }
+    private lateinit var categoryView: FragmentCategoryListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,6 +30,46 @@ class CategoryListFragment : Fragment() {
         // Inflate the layout for this fragment
         categoryView = FragmentCategoryListBinding.inflate(inflater, container, false)
         return categoryView.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        actions()
+        categoryVM.viewState.observe(viewLifecycleOwner, {
+            renderView(it)
+        })
+        if ((categoryVM.viewState.value is CourseCategoriseViewState.Success).not()) {
+            categoryVM.getCourses(args.categoryName)
+        }
+
+    }
+
+    private fun initView() {
+        categoryView.rvCoursesCategory.adapter = adapter
+    }
+
+    private fun renderView(viewState: CourseCategoriseViewState) {
+        when (viewState) {
+            is CourseCategoriseViewState.Loading -> {
+                categoryView.loader.visibility = if (viewState.show) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            }
+            is CourseCategoriseViewState.Success -> {
+                categoryView.categorySection.visibility = View.VISIBLE
+                lifecycleScope.launch {
+                    adapter.submitData(viewState.courses)
+                }
+            }
+        }
+    }
+
+    private fun actions() {
+
     }
 
 

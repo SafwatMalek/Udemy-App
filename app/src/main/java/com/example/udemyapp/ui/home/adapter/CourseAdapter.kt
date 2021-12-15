@@ -6,6 +6,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.udemyapp.R
+import com.example.udemyapp.data.course.CoursesCategoryType
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.databinding.ItemCourseListBinding
 import com.example.udemyapp.databinding.ItemSeeAllBinding
@@ -13,10 +14,11 @@ import kotlin.reflect.KFunction1
 
 class CourseAdapter(
     private val courses: List<Results>,
+    private val category: CoursesCategoryType,
     private val callback: KFunction1<Results, Unit>,
+    private val seeAllAction: KFunction1<String, Unit>,
     private val showSeeAll: Boolean = true
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = (if (showSeeAll) {
         courses.size + 1
@@ -53,10 +55,11 @@ class CourseAdapter(
                 )
                 holder.bind(courses[position])
             }
-            is SeeAllViewHolder -> {}
+            is SeeAllViewHolder -> {
+                holder.bind()
+            }
         }
     }
-
 
     inner class CourseViewHolder(val view: ItemCourseListBinding) :
         RecyclerView.ViewHolder(view.root) {
@@ -79,7 +82,14 @@ class CourseAdapter(
         }
     }
 
-    inner class SeeAllViewHolder(view: ItemSeeAllBinding) : RecyclerView.ViewHolder(view.root)
+    inner class SeeAllViewHolder(private val view: ItemSeeAllBinding) :
+        RecyclerView.ViewHolder(view.root) {
+        fun bind() {
+            view.root.setOnClickListener {
+                seeAllAction.invoke(category.value)
+            }
+        }
+    }
 
     companion object {
         const val COURSE_ITEM = 1

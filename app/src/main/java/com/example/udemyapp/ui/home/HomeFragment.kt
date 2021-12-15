@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.udemyapp.data.course.CoursesCategoryType
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.databinding.FragmentHomeBinding
 import com.example.udemyapp.ui.home.adapter.CategoryAdapter
@@ -34,7 +35,7 @@ class HomeFragment : Fragment() {
         homeViewModel.internalState.observe(viewLifecycleOwner, {
             renderView(it)
         })
-        if (homeViewModel.internalState.value == null) {
+        if ((homeViewModel.internalState.value is CoursesViewState.CoursesList).not()) {
             homeViewModel.getCoursesList()
         }
     }
@@ -69,7 +70,13 @@ class HomeFragment : Fragment() {
                 false
             )
             homeViewBindings.rvBusiness.layoutManager = businessLayoutManager
-            val businessAdapter = CourseAdapter(businessList, this::courseDetailsAction)
+            val businessAdapter = CourseAdapter(
+                businessList,
+                CoursesCategoryType.Business,
+                this::courseDetailsAction,
+                this::seeAllAction
+            )
+
             homeViewBindings.rvBusiness.adapter = businessAdapter
         }
     }
@@ -85,7 +92,12 @@ class HomeFragment : Fragment() {
                 false
             )
             homeViewBindings.rvDesign.layoutManager = designLayoutManager
-            val designAdapter = CourseAdapter(designList, this::courseDetailsAction)
+            val designAdapter = CourseAdapter(
+                designList,
+                CoursesCategoryType.Business,
+                this::courseDetailsAction,
+                this::seeAllAction
+            )
             homeViewBindings.rvDesign.adapter = designAdapter
         }
     }
@@ -104,7 +116,12 @@ class HomeFragment : Fragment() {
             homeViewBindings.rvDevelopment.layoutManager = developmentLayoutManager
 
 
-            val developmentAdapter = CourseAdapter(developmentList, this::courseDetailsAction)
+            val developmentAdapter = CourseAdapter(
+                developmentList,
+                CoursesCategoryType.Business,
+                this::courseDetailsAction,
+                this::seeAllAction
+            )
             homeViewBindings.rvDevelopment.adapter = developmentAdapter
         }
     }
@@ -121,13 +138,18 @@ class HomeFragment : Fragment() {
             homeViewBindings.rvCategory.layoutManager = categoryLayoutManager
 
 
-            val developmentAdapter = CategoryAdapter(categories)
+            val developmentAdapter = CategoryAdapter(categories,this::seeAllAction)
             homeViewBindings.rvCategory.adapter = developmentAdapter
         }
     }
 
     private fun courseDetailsAction(course: Results) {
         val action = HomeFragmentDirections.homeFragmentToDetailsFragment(course)
+        findNavController().navigate(action)
+    }
+
+    private fun seeAllAction(category: String) {
+        val action = HomeFragmentDirections.homeFragmentToCategoryListFragment(category)
         findNavController().navigate(action)
     }
 }

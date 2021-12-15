@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.udemyapp.databinding.ItemCategoryBinding
 
-class CategoryAdapter constructor(private val categories: List<String>) :
+class CategoryAdapter(private val categories: List<String>, val seeAll: (String) -> Unit) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     override fun getItemCount() = categories.size
@@ -21,10 +21,13 @@ class CategoryAdapter constructor(private val categories: List<String>) :
     }
 
 
-    inner class CategoryViewHolder(val view: ItemCategoryBinding) :
+    inner class CategoryViewHolder(private val view: ItemCategoryBinding) :
         RecyclerView.ViewHolder(view.root) {
         fun bind(category: String) {
             view.tvCategoryName.text = category
+            view.root.setOnClickListener {
+                seeAll.invoke(category)
+            }
         }
 
     }
