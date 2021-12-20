@@ -7,4 +7,5 @@
     <string name="home_see_all">See All</string>
     <string name="details_preview_this_course">Preview this course</string>
     <string name="details_created_by">Created by %s</string>
+    <string name="details_student_review">Student Feedback</string>
 </resources>

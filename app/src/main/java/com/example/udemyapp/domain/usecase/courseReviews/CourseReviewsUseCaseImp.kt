@@ -8,7 +8,9 @@ class CourseReviewsUseCaseImp @Inject constructor(private val courseRepo: Course
     CourseReviewsUseCase {
 
     override suspend fun getReviews(courseId: String): List<Review> {
-        return courseRepo.getReviews(courseId).results ?: emptyList()
+        return courseRepo.getReviews(courseId).results?.filter {
+            it.content.isNotEmpty()
+        } ?: emptyList()
     }
 
 }

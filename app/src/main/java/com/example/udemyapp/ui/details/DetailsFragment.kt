@@ -13,6 +13,7 @@ import com.example.udemyapp.R
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.data.review.Review
 import com.example.udemyapp.databinding.FragmentDetailsBinding
+import com.example.udemyapp.ui.details.adapter.ReviewsAdapter
 import com.example.udemyapp.utils.setVisibility
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -78,7 +79,13 @@ class DetailsFragment : Fragment() {
 
 
     private fun initReview(reviews: List<Review>) {
-
+        if (reviews.isNotEmpty()) {
+            detailsView.reviewSection.setVisibility(true)
+            val adapter = ReviewsAdapter(reviews)
+            detailsView.rvReview.adapter = adapter
+        } else {
+            detailsView.reviewSection.setVisibility(false)
+        }
     }
 
     private fun action() {

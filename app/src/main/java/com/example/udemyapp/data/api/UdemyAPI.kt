@@ -24,7 +24,9 @@ interface UdemyAPI {
 
     @GET("api-2.0/courses/{course_id}/reviews")
     suspend fun getReviews(
-        @Path("course_id") courseId: String
+        @Path("course_id") courseId: String,
+        @Query("page") page: Int? = 1,
+        @Query("page_size") pageSize: Int = 6,
     ): CoursesResponse<Review>
 
 
