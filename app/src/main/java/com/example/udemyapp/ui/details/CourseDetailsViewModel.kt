@@ -1,8 +1,10 @@
 package com.example.udemyapp.ui.details
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.udemyapp.domain.usecase.courseDetails.CourseDetailsUseCase
+import com.example.udemyapp.domain.usecase.courseReviews.CourseReviewsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -13,14 +15,29 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CourseDetailsViewModel @Inject constructor(
-    val courseDetailsUseCase: CourseDetailsUseCase
+    private val courseDetailsUseCase: CourseDetailsUseCase,
+    private val reviewsUseCase: CourseReviewsUseCase
 ) : ViewModel() {
 
+    private val viewState = MutableLiveData<CourseDetailsViewState>()
+    val internalState = viewState
+
     fun getCourseDetails(courseId: String) {
+        viewState.value = CourseDetailsViewState.Loading(true)
+
         viewModelScope.launch(Dispatchers.IO) {
-            val courseDetails = async { courseDetailsUseCase.getCourseDetails(courseId) }.await()
+            val courseDetailsDeferred = async { courseDetailsUseCase.getCourseDetails(courseId) }
+            val courseReviewsDeferred = async { reviewsUseCase.getReviews(courseId) }
+
+            val courseDetails = courseDetailsDeferred.await()
+            val courseReviews = courseReviewsDeferred.await()
+
             withContext(Dispatchers.Main) {
-                print("courseDetails: $courseDetails")
+                viewState.value = CourseDetailsViewState.Loading(false)
+                viewState.value = CourseDetailsViewState.CourseDetails(
+                    details = courseDetails,
+                    reviews = courseReviews
+                )
             }
         }
     }

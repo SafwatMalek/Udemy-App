@@ -7,12 +7,15 @@
     tools:context=".ui.details.DetailsFragment">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/detailsContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -113,7 +116,6 @@
                 app:layout_constraintStart_toStartOf="@+id/tvCourseDescription"
                 app:layout_constraintTop_toBottomOf="@+id/tvCourseDescription" />
 
-
             <!--instructor name-->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvInstructorName"
@@ -129,9 +131,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/rbCourse"
                 tools:text="Dr Safwat Malek, Dr Arsany Nagy" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.core.widget.NestedScrollView>
+
+
+    <!--loader-->
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/design_default_color_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

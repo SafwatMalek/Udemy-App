@@ -41,15 +41,14 @@ class CategoriesViewModel @Inject constructor(
 
     fun getCourses(category: String) {
         viewState.value = CourseCategoriseViewState.Loading(true)
-
         viewModelScope.launch(Dispatchers.IO + handleException) {
             val courses = coursesByCategoryUseCase
                 .getCoursesByCategory(category)
                 .cachedIn(viewModelScope)
 
             withContext(Dispatchers.Main) {
-                viewState.value = CourseCategoriseViewState.Loading(false)
                 courses.collectLatest {
+                    viewState.value = CourseCategoriseViewState.Loading(false)
                     viewState.value = CourseCategoriseViewState.Success(it)
                 }
             }

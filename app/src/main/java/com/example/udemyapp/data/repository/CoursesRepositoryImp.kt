@@ -8,6 +8,7 @@ import com.example.udemyapp.data.course.CoursesCategoryType
 import com.example.udemyapp.data.course.CoursesResponse
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.data.dataSource.CoursesDataSource
+import com.example.udemyapp.data.review.Review
 import com.example.udemyapp.domain.repository.CoursesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -15,13 +16,20 @@ import javax.inject.Inject
 class CoursesRepositoryImp @Inject constructor(private val udemyAPI: UdemyAPI) : CoursesRepository {
 
 
-    override suspend fun getCoursesList(pageSize: Int, category: String?): CoursesResponse {
+    override suspend fun getCoursesList(
+        pageSize: Int,
+        category: String?
+    ): CoursesResponse<Results> {
         return udemyAPI.getCourses(category = category, pageSize = pageSize)
+    }
+
+    override suspend fun getReviews(courseId: String): CoursesResponse<Review> {
+        return udemyAPI.getReviews(courseId = courseId)
     }
 
     override suspend fun getCoursesListCategory(category: String): Flow<PagingData<Results>> {
         return Pager(
-            config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 10, enablePlaceholders = true),
             pagingSourceFactory = { CoursesDataSource(udemyAPI, category) }
         ).flow
     }

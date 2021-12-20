@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.databinding.FragmentCategoryListBinding
 import com.example.udemyapp.ui.categoryList.adapter.CoursesCategoriseAdapter
+import com.example.udemyapp.utils.setVisibility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -56,11 +57,7 @@ class CategoryListFragment : Fragment() {
     private fun renderView(viewState: CourseCategoriseViewState) {
         when (viewState) {
             is CourseCategoriseViewState.Loading -> {
-                categoryView.loader.visibility = if (viewState.show) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
+                categoryView.loader.setVisibility(viewState.show)
             }
             is CourseCategoriseViewState.Success -> {
                 categoryView.rvCoursesCategory.visibility = View.VISIBLE

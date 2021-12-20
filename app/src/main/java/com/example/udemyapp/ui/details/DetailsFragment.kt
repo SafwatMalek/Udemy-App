@@ -11,7 +11,9 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.udemyapp.R
 import com.example.udemyapp.data.course.Results
+import com.example.udemyapp.data.review.Review
 import com.example.udemyapp.databinding.FragmentDetailsBinding
+import com.example.udemyapp.utils.setVisibility
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -32,15 +34,32 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        argument.course?.let {
-            initView(it)
-        } ?: kotlin.run {
+        detailsVM.internalState.observe(viewLifecycleOwner, {
+            renderView(it)
+        })
 
-        }
+        if ((detailsVM.internalState.value is CourseDetailsViewState.CourseDetails).not())
+            detailsVM.getCourseDetails(argument.course?.id.toString())
+
         action()
     }
 
-    private fun initView(course: Results) {
+    private fun renderView(viewState: CourseDetailsViewState?) {
+        when (viewState) {
+            is CourseDetailsViewState.Loading -> {
+                detailsView.loader.setVisibility(viewState.isLoading)
+            }
+            is CourseDetailsViewState.CourseDetails -> {
+                detailsView.detailsContainer.setVisibility(true)
+                initDetails(viewState.details)
+                initReview(viewState.reviews)
+            }
+            else -> {}
+        }
+    }
+
+
+    private fun initDetails(course: Results) {
         course.image_480x270.let {
             detailsView.ivCourseImage.clipToOutline = true
             detailsView.ivCourseImage.clipToOutline = true
@@ -57,6 +76,10 @@ class DetailsFragment : Fragment() {
 
     }
 
+
+    private fun initReview(reviews: List<Review>) {
+
+    }
 
     private fun action() {
         detailsView.toolbar.ivBack.setOnClickListener {

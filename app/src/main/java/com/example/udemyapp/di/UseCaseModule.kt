@@ -12,6 +12,8 @@ import com.example.udemyapp.domain.usecase.courseList.design.DesignCourseListUse
 import com.example.udemyapp.domain.usecase.courseList.design.DesignCourseListUseCaseImp
 import com.example.udemyapp.domain.usecase.courseList.development.DevelopmentCourseListUseCase
 import com.example.udemyapp.domain.usecase.courseList.development.DevelopmentCourseListUseCaseImp
+import com.example.udemyapp.domain.usecase.courseReviews.CourseReviewsUseCase
+import com.example.udemyapp.domain.usecase.courseReviews.CourseReviewsUseCaseImp
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -45,6 +47,11 @@ abstract class UseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun ProvideCourseByCategoryUseCase(coursesByCategoryUseCase: CoursesByCategoryUseCaseImp): CoursesByCategoryUseCase
+
+
+    @Binds
+    @ViewModelScoped
+    abstract fun ProvideReviewsUseCase(reviewsUseCaseImp: CourseReviewsUseCaseImp): CourseReviewsUseCase
 
 
 }

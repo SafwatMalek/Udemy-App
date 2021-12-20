@@ -29,18 +29,16 @@ class HomeViewModel @Inject constructor(
             viewState.value = CoursesViewState.Loading(true)
             viewModelScope.launch(Dispatchers.IO) {
                 supervisorScope {
-                    val business = async(Dispatchers.IO) {
-                        getBusinessList()
-                    }.await()
-                    val design = async(Dispatchers.IO) {
-                        getTopDesign()
-                    }.await()
-                    val development = async(Dispatchers.IO) {
-                        getTopDevelopment()
-                    }.await()
-                    val categories = async(Dispatchers.IO) {
-                        getCategories()
-                    }.await()
+                    val businessDeferred = async { getBusinessList() }
+                    val designDeferred = async { getTopDesign() }
+                    val developmentDeferred = async { getTopDevelopment() }
+                    val categoriesDeferred = async { getCategories() }
+
+
+                    val business = businessDeferred.await()
+                    val design = designDeferred.await()
+                    val development = developmentDeferred.await()
+                    val categories = categoriesDeferred.await()
 
                     withContext(Dispatchers.Main) {
                         viewState.value = CoursesViewState.Loading(false)

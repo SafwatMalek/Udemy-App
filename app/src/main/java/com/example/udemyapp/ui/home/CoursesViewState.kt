@@ -11,5 +11,5 @@ sealed class CoursesViewState {
         val categories: List<String>
     ) : CoursesViewState()
 
-    class Loading(val isLong: Boolean) : CoursesViewState()
+    class Loading(val isLoading: Boolean) : CoursesViewState()
 }

@@ -14,6 +14,7 @@ import com.example.udemyapp.data.course.Results
 import com.example.udemyapp.databinding.FragmentHomeBinding
 import com.example.udemyapp.ui.home.adapter.CategoryAdapter
 import com.example.udemyapp.ui.home.adapter.CourseAdapter
+import com.example.udemyapp.utils.setVisibility
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,11 +51,7 @@ class HomeFragment : Fragment() {
                 initCategoryList(viewState.categories)
             }
             is CoursesViewState.Loading -> {
-                homeViewBindings.loader.visibility = if (viewState.isLong) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
+                homeViewBindings.loader.setVisibility(viewState.isLoading)
             }
         }
     }
