@@ -1,11 +1,5 @@
 # Udemy-App
-
-![Splash Screen](https://drive.google.com/file/d/1qykqIY84rVx42ONMr1vxRKAf0o0Fqj8f/view?usp=sharing)
-
-![Home Screen](https://drive.google.com/file/d/1ThndBr2VV_pSVAvkJ5UXpcOZ5s5kOOlj/view?usp=sharing)
-
-![Course Details](https://drive.google.com/file/d/16oszxNxWMHXmG8joyDX1J2sSzK6eZMgY/view?usp=sharing)
-
-![See All](https://drive.google.com/file/d/15CJokmGyPSYop3FKaUobxaKVGJKoJDxt/view?usp=sharing)
-
-![All Courses for specific category](https://drive.google.com/file/d/1NSl7gSMzvc4OsVbDGjNGpSbEpxAUWUxh/view?usp=sharing)
+![Screenshot_1640047001](https://user-images.githubusercontent.com/55443077/146851804-441dbc8a-3b28-4fbf-a97a-21d06fbbc3a0.png)
+![Screenshot_1640046904](https://user-images.githubusercontent.com/55443077/146851815-46dd9606-1514-4f6d-8cee-a5db8b8e84c4.png)
+![Screenshot_1640046893](https://user-images.githubusercontent.com/55443077/146851819-602d541b-b6a3-42a7-8176-453adddbda56.png)
+![Screenshot_1640046890](https://user-images.githubusercontent.com/55443077/146851826-f1ffc30e-0271-4608-81c0-be881c3b91b5.png)
