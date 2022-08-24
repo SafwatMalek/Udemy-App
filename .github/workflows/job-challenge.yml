@@ -3,20 +3,20 @@ on: push
 
 jobs:
     ubuntu:
-        run-on: ubuntu-latest
+        runs-on: ubuntu-latest
         steps:
         - run: date
     windows:
-        run-on: windows-latest
+        runs-on: windows-latest
         steps:
         - run: date
     macOs:
-        run-on: macos-latest
+        runs-on: macos-latest
         steps:
         - run: date
     dependency:
-        need: [ubuntu, windows, macOS]
-        run-on: macos-latest
+        needs: [ubuntu, windows, macOS]
+        runs-on: macos-latest
         steps:
         - run: date
         
