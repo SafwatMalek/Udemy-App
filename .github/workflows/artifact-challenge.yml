@@ -6,10 +6,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: checkout branchs
-            uses: action/chcekout@v1
+            uses: action/chcekout@v2
             
           - name: upload artifact
-            uses: action/upload-artifact
+            uses: action/upload-artifact@v2
             with:
                name: ${{ secret.ART_NAME }}
                path: .
