@@ -1,0 +1,15 @@
+name: upload artifact
+on: push
+
+jobs:
+    UploadArt:
+        runs-on: ubuntu-latest
+        steps:
+          - name: checkout branchs
+            uses: action/chcekout@v1
+            
+          - name: upload artifact
+            uses: action/upload-artifact
+            with:
+               name: ${{ secret.ART_NAME }}
+               path: .
