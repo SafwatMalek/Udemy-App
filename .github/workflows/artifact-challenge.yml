@@ -11,5 +11,5 @@ jobs:
           - name: upload artifact
             uses: action/upload-artifact@v2
             with:
-               name: ${{ secret.ART_NAME }}
+               name: ${{ secrets.ART_NAME }}
                path: .
